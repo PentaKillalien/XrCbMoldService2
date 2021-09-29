@@ -87,5 +87,6 @@ namespace XrCbMoldService.Dto
         /// 产品名称
         /// </summary>
         public string FMATERIALNAME { get; set; }
+
     }
 }
