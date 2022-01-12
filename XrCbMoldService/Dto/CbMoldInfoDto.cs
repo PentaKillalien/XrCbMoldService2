@@ -32,5 +32,7 @@ namespace XrCbMoldService.Dto
         /// TwinCatStr
         /// </summary>
         public string TwinCatStr { get; set; }
+
+        public string Ip { get; set; }
     }
 }

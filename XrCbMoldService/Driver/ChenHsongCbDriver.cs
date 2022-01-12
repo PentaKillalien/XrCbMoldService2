@@ -42,9 +42,11 @@ namespace XrCbMoldService.Driver
                 {
                     foreach (var item2 in item.MachineControls)
                     {
+                        CbMoldInfoDto a = new CbMoldInfoDto();
+                        a.Ip= item2.IpAddress;
                         if (item2.Port != "1")
                         {
-                            CbMoldInfoDto a = new CbMoldInfoDto();
+                            
                             a.DevName = item.DevId;
                             a.TwinCatStr = item2.Port;
                             ports.Add(a);

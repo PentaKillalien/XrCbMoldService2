@@ -88,5 +88,7 @@ namespace XrCbMoldService.Dto
         /// </summary>
         public string FMATERIALNAME { get; set; }
 
+        public string FIP { get; set; }
+
     }
 }

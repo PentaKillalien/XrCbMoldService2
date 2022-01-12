@@ -75,7 +75,8 @@ namespace XrCbMoldService
         /// ConnectFlag
         /// </summary>
         private Boolean ConnectFlag;
-        
+
+        private string Ip = string.Empty;
         public CbMoldClient(CbMoldInfoDto info)
         {
             
@@ -86,6 +87,7 @@ namespace XrCbMoldService
             tcClient = new TcAdsClient();
             AmsNetId = info.TwinCatStr;
             DevName = info.DevName;
+            Ip = info.Ip;
             Connect();
             timer = new Timer(new TimerCallback(Read_Execute), null, 2000, 10000);
             TcAdsAction += ReadFromMachine;
@@ -236,7 +238,7 @@ namespace XrCbMoldService
         {
             try
             {
-                M_IChenDriver.InsterMachineRealtimeOne(dto);
+                M_IChenDriver.InsterMachineRealtimeOne(dto,Ip);
                 Console.WriteLine(DevName+"数据插入oracle");
             }
             catch (Exception ex)

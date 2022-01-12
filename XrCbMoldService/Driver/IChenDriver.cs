@@ -135,7 +135,7 @@ namespace XrCbMoldService.Driver
         /// </summary>
         /// <param name="machineRunStateDtos"></param>
         /// <returns></returns>
-        public void InsterMachineRealtimeOne(MachineRunStateDto m)
+        public void InsterMachineRealtimeOne(MachineRunStateDto m,string ip)
         {
             //OracleHelper.ExecuteNonQuery("insert into RH_IOTTEST (TA,TB,TC) values ('c2','xiaozhang','c3')");
             //string strSql = "insert into M_IOTMACHINE_REALTIME (FMACHINEID,FSTATUS,FYIELD,FGOOD,FBAD,FDATE,FTIMESTAMP,POWER,FSPM,FPERCOUNT) values ('Rh001','3',0,1,2,to_date('2009-5-7 17:09:37','yyyy-mm-dd HH24:MI:SS'),'157294100085',0,1,2)";
@@ -175,6 +175,8 @@ namespace XrCbMoldService.Driver
                     dto.FMATERIAL = middto.FMATERIAL;
                     dto.FMATERIALNAME = middto.FMATERIALNAME;
                 }
+
+                dto.FIP = ip;
                 Mrtdda.Insert(dto);
 
             }
