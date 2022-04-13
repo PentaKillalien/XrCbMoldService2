@@ -31,6 +31,7 @@ namespace XrCbMoldService
                 foreach (var item in temp)
                 {
                     new CbMoldClient(item);
+                    Log4netHelper.WriteLog(item.DevName);
                 }
             });
 
@@ -71,16 +72,11 @@ namespace XrCbMoldService
         /// DevName
         /// </summary>
         private string DevName;
-        /// <summary>
-        /// ConnectFlag
-        /// </summary>
-        private Boolean ConnectFlag;
 
         private string Ip = string.Empty;
         public CbMoldClient(CbMoldInfoDto info)
         {
             
-            ConnectFlag = false;
             Console.WriteLine(info.DevName.ToString());
             XRICD = new XrRedisChenHsongDbAccess();
             M_IChenDriver = new IChenDriver();
@@ -107,12 +103,15 @@ namespace XrCbMoldService
         /// </summary>
         private void ReadFromMachine()
         {
-            if (ConnectFlag)
+            try
             {
-                //Console.WriteLine(AmsNetId + "读取数据");
                 var a = tcClient.ReadAny(iHandle, typeof(int)).ToString();
                 Console.WriteLine(AmsNetId + "--->机器编号" + DevName + "数据:" + a);
                 GatherDate();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"获取数据失败{ex.Message}");
             }
 
         }
@@ -128,36 +127,15 @@ namespace XrCbMoldService
                 //port
                 tcClient.Connect(AmsNetId, 801);
                 iHandle = tcClient.CreateVariableHandle(VarName);
-                ConnectFlag = true;
                 return true;
             }
             catch (Exception ex)
             {
                 Log4netHelper.WriteLog($"链接失败{ex.Message}", ex);
-                ConnectFlag = false;
                 return false;
             }
         }
-        /// <summary>
-        /// 断开连接
-        /// </summary>
-        /// <returns></returns>
-        bool DisConnect()
-        {
-            try
-            {
-                tcClient.Disconnect();
-                tcClient = new TcAdsClient();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                tcClient = new TcAdsClient();
-                Log4netHelper.WriteLog($"链接失败{ex.Message}", ex);
-                return false;
-            }
-        }
-
+        
         /// <summary>
         /// 得到数据并处理
         /// </summary>
@@ -169,9 +147,6 @@ namespace XrCbMoldService
             BinaryReader binRead = new BinaryReader(dataStream);
             List<GatherDataModel> TemParList = new List<GatherDataModel>();
             var machineRunState = XRICD.GetOneDto(DevName);
-            Console.WriteLine(DevName+"从redis获取数据");
-
-
             if (tcClient.IsConnected)
             {
                 //read comlpete Array 

@@ -74,7 +74,6 @@ namespace XrCbMoldService.Driver
                         FBILLNOINFO = Info_list[2]
                     };
                     xrMidInfoList.Add(xrMidInfo);
-                    Console.WriteLine("-------------------------------添加数据");
                 }
                 MidInfos?.Invoke(xrMidInfoList);
             }
