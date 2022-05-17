@@ -147,6 +147,7 @@ namespace XrCbMoldService
             BinaryReader binRead = new BinaryReader(dataStream);
             List<GatherDataModel> TemParList = new List<GatherDataModel>();
             var machineRunState = XRICD.GetOneDto(DevName);
+            Console.WriteLine($"Redis获取DevName{DevName}");
             if (tcClient.IsConnected)
             {
                 //read comlpete Array 
@@ -200,10 +201,8 @@ namespace XrCbMoldService
             {
                 Connect();
             }
-            if (machineRunState.ProductQtySum != 0)
-            {
-                UpMachineRunState(machineRunState);
-            }
+            //插入数据
+            UpMachineRunState(machineRunState);
         }
         /// <summary>
         /// 上传数据到REALTIME
@@ -214,7 +213,7 @@ namespace XrCbMoldService
             try
             {
                 M_IChenDriver.InsterMachineRealtimeOne(dto,Ip);
-                Console.WriteLine(DevName+"数据插入oracle");
+                Console.WriteLine(dto.DevId+"数据插入oracle");
             }
             catch (Exception ex)
             {

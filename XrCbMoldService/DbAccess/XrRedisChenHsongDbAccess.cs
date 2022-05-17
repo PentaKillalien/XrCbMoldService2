@@ -53,6 +53,7 @@ namespace XrCbMoldService.DbAccess
             try
             {
                 var a = JsonConvert.DeserializeObject<MachineRunStateDto>(database.StringGet(key).ToString());
+                Console.WriteLine($"Redis获取{key}");
                 return a;
             }
             catch (Exception ex)
