@@ -105,8 +105,8 @@ namespace XrCbMoldService
         {
             try
             {
-                var a = tcClient.ReadAny(iHandle, typeof(int)).ToString();
-                Console.WriteLine(AmsNetId + "--->机器编号" + DevName + "数据:" + a);
+                //var a = tcClient.ReadAny(iHandle, typeof(int)).ToString();
+                //Console.WriteLine(AmsNetId + "--->机器编号" + DevName + "数据:" + a);
                 GatherDate();
             }
             catch (Exception ex)
@@ -147,12 +147,14 @@ namespace XrCbMoldService
             BinaryReader binRead = new BinaryReader(dataStream);
             List<GatherDataModel> TemParList = new List<GatherDataModel>();
             var machineRunState = XRICD.GetOneDto(DevName);
+            machineRunState.DevId = DevName;
             Console.WriteLine($"Redis获取DevName{DevName}");
             if (tcClient.IsConnected)
             {
                 //read comlpete Array 
                 tcClient.Read(iHandle, dataStream);
                 dataStream.Position = 0;
+                Console.WriteLine($"Redis获取{DevName}----Read数据");
                 for (int i = 0; i < 800; i++)
                 {
                     TemParList.Add(new GatherDataModel()

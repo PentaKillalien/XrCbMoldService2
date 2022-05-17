@@ -88,6 +88,7 @@ namespace XrCbMoldService.Driver
 
                 MachineRealTimeDto dto = new MachineRealTimeDto();
                 dto.FMACHINEID = m.DevId;//去掉
+                Console.WriteLine($"{m.DevId} 进入状态绑定-------------------------");
                 var middto = GetRelationDto(dto.FMACHINEID);
                 if (m.RunState == MachineState.Run.ToString())
                 {
@@ -118,6 +119,13 @@ namespace XrCbMoldService.Driver
                     dto.FBILLNOINFO = middto.FBILLNOINFO;
                     dto.FMATERIAL = middto.FMATERIAL;
                     dto.FMATERIALNAME = middto.FMATERIALNAME;
+                }
+                else {
+                    Console.WriteLine($"{dto.FMACHINEID}--------------------------");
+                    dto.FBILLNOINFO = "";
+                    dto.FMATERIAL = "";
+                    dto.FMATERIALNAME = "";
+
                 }
 
                 dto.FIP = ip;
